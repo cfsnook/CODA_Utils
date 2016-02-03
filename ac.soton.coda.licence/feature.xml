@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="ac.soton.coda.license"
-      label="%CODALicenseFeatureName"
-      version="1.0.0.qualifier"
-      provider-name="%CODALicenseFeatureVendor">
+      id="ac.soton.coda.licence"
+      label="%CODALicenceFeatureName"
+      version="1.1.0.qualifier"
+      provider-name="%CODALicenceFeatureVendor">
 
    <description>
-      %CODALicenseDescription
+      %CODALicenceDescription
    </description>
 
    <copyright>
-      %CODALicenseCopyright
+      %CODALicenceCopyright
    </copyright>
 
-   <license url="%CODALicenseURL">
-      %CODALicense
+   <license url="%CODALicenceURL">
+      %CODALicence
    </license>
 
 </feature>
