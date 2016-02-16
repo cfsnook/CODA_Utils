@@ -1,7 +1,82 @@
 \section{Concepts}
 \label{sec:vhdl-concepts}
 
+\subsection{Behavioural VHDL}
+\label{sec:vhdl-behavioural}
+We use a subset of the behavioural VHDL syntax as defined in the VHDL standard 1076.
+
+\begin{VHDLcode}[\footnotesize]
+  DesignFile & ::= & DesignUnit+ \\
+  DesignUnit & ::= & ContextItem* LibraryUnit \\
+  ContextItem & ::= & LibraryClause | UseClause \\
+  LibraryClause & ::= & \VHDLLIBRARY{} LogicalName (\VHDLComma{} LogicalName)*\VHDLSemicolon \\
+  LogicalName & ::= & Identifier \\
+  UseClause & ::= & \VHDLUSE{} SelectedName (\VHDLComma{} SelectedName)*\VHDLSemicolon \\
+  Name & ::= & SelectedName | \\
+  LibraryUnit & ::= & PrimaryUnit | SecondaryUnit \\
+  PrimaryUnit & ::= & EntityDeclaration \\
+  EntityDeclaration & ::= & \VHDLENTITY{} Identifier \VHDLIS \\
+                              &      & \VHDLTab \VHDLPORT{} ( \\
+                              &      & \VHDLTab \VHDLTab InterfaceList \\
+                              &      & \VHDLTab ) \\
+                              &      & \VHDLTab EntityDeclarativeItem* \\
+                              &      & \VHDLEND{} Identifier \\
+  InterfaceList & ::=  & InterfaceElement (\VHDLSemicolon{} InterfaceElement)* \\
+  InterfaceElement & ::= & InterfaceSignalDeclaration | \\
+  InterfaceSignalDeclaration & ::= & [\VHDLSIGNAL] Identifier [Mode] SubtypeIndication \\
+  Mode & ::= & \VHDLIN{} | \VHDLOUT{} | \VHDLINOUT \\
+  SubtypeIndication & ::= & Name \\
+  EntityDeclarativeItem & ::= & TypeDeclaration \\
+  TypeDeclaration & ::= & FullTypeDeclaration \\
+  FullTypeDeclaration & ::= & \VHDLTYPE{} Identifier \VHDLIS{} TypeDefinition \VHDLSemicolon \\
+  TypeDefinition & ::= & ScalarTypeDefinition \\
+  ScalarTypeDefinition & ::= & EnumerationTypeDefinition \\
+  EnumerationTypeDefinition & ::= & \VHDLOpenBracket{} EnumerationLiteral (\VHDLComma{} EnumerationLiteral)* \VHDLCloseBracket{} \\
+  EnumeartionLiteral & ::= & Name \\
+  SecondaryUnit & ::= & ArchitectureBody \\
+  ArchitectureBody & ::= & \VHDLARCHITECTURE{} Identifier \VHDLOF{} Name \VHDLIS \\
+                              &      & \VHDLTab BlockDeclarativeItem* \\
+                              &      & \VHDLBEGIN \\
+                              &      & \VHDLTab ConcurrentStatement* \\
+                              &      & \VHDLEND{} Name \VHDLSemicolon \\
+  BlockDeclarativeItem & ::= & TypeDeclaration \\
+  ConcurrentStatement & ::= & ProcessStatement \\
+  ProcessStatement & ::= & \VHDLPROCESS{} [\VHDLOpenBracket{} SignalName* \VHDLCloseBracket{}] \VHDLIS \\
+                               &      & \VHDLTab ProcessDeclarativeItem* \\
+                               &      & \VHDLBEGIN \\
+                               &      & \VHDLTab SequentialStatement* \\
+                               &      & \VHDLEND{} \VHDLPROCESS \\
+  SignalName & ::= & Name \\
+  ProcessDeclarativeItem & ::= & TypeDeclaration \\
+  SequentialStatement & ::= & AssertionStatement | \\
+                                   &       & SignalAssignmentStatement | \\
+                                   &       & IfStatement | \\
+                                   &       & CaseStatement \\
+   AssertionStatement & ::= & \VHDLASSERT{} Assertion \\
+   Assertion & ::= & BooleanExpression \\
+   SignalAssignmentStatement & ::= & Target <-- Waveform \\
+   IfStatement  & ::= & IfClause \\
+                       &       & ElsifClause* \\
+                       &       & [ElseClause] \\
+   IfClause & ::= & \VHDLIF{} BooleanExpression \VHDLTHEN \\
+                 &      & \VHDLTab SequentialStatement* \\
+   ElsifClause & ::= & \VHDLELSIF{} BooleanExpression \VHDLTHEN \\
+                     &      & \VHDLTab SequentialStatement* \\
+   ElseClause & ::= & \VHDLELSE \\
+                     &      & \VHDLTab SequentialStatement* \\
+   CaseStatement & ::= & \VHDLCASE{} Expression \VHDLIS \\
+                           &       &  \VHDLTab CaseStatementAlternative+ \\
+                           &       &  \VHDLEND{} \VHDLCASE \\
+   CaseStatementAlternative & ::= & \VHDLWHEN{} Label \VHDLIMPLIES \\
+                                            &      &  \VHDLTab SequentialStatement* \\
+\end{VHDLcode}
+
+\subsection{VXMI}
+\label{sec:vhdl-vxmi}
+A VXMI model is a representation of a VHDL model in XML.  In the subsequent, we present some example VXMI elements and their relationships.
+
+
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "user_manual"
+%%% TeX-master: "vhdl-user_manual"
 %%% End:

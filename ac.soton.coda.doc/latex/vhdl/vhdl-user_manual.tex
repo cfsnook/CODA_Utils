@@ -4,26 +4,57 @@
 % %%%% This ensure that the file complied normally without plasTeX.
 \usepackage{plastex}
 
+\usepackage{hyperref}
+
 \ifplastex\else
 \usepackage{standalone} %%%% Only load standalone when not in plasTeX
 \standalonetrue
 \fi
 
-% % Package for typesetting URLs
+% Package for typesetting URLs
 \usepackage{url}
 
-\usepackage{import}
+% Package for including graphics.
+\usepackage{graphicx}
 
-% % Title
+% Package for CODA specific macros
+\usepackage{coda}
+
+
+% Package for typesetting Event-B models
+%\usepackage[colour]{eventB}
+%\usepackage{eventB-vhdl}
+
+% Package for typesetting dates and times
+\ifplastex
+\newcommand{\VHDLManualDate}{February 6th, 2016}
+\else
+\usepackage{datetime}
+\newdate{VHDLManualDate}{6}{2}{2016}
+\fi
+\newcommand{\VHDLManualVersion}{0.0.1}
+
+\usepackage{vhdl}
+
+% Title
 \title{CODA VHDL Generator User Manual} 
 
-% % Author
-\author{Thai Son Hoang \\ University of Southampton}
+% Author
+\author{%
+  Thai Son Hoang\\%
+  ECS, University of Southampton\\%
+  \texttt{\href{mailto:T.S.Hoang@ecs.soton.ac.uk}{T.S.Hoang@ecs.soton.ac.uk}}%
+}%
 
-% % Date
+
+% Date
 \date{%
-  Version 0.0.1\\%
-  \today%
+  Version \VHDLManualVersion\\%
+  \ifplastex
+  \VHDLManualDate
+  \else
+  \displaydate{VHDLManualDate}%
+  \fi
 }
 
 \begin{document}

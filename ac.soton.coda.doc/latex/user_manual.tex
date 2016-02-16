@@ -1,14 +1,69 @@
-\documentclass[a4paper,10pt]{report}
+\documentclass[a4paper,10pt]{book}
 \usepackage{import}
 \usepackage{standalone}
 \usepackage{url}
 \usepackage{plastex}
+\usepackage{datetime}
+\usepackage{emptypage}
+\usepackage{hyperref}
+\usepackage{coda}
+
+\usepackage{vhdl}
+
+%\usepackage[T1]{fontenc}
+%\usepackage{beramono}
+%\usepackage[latin1]{inputenc}
+
+% Title
+\title{CODA User Manual and Tutorial}
+\author{Colin Snook \and John Colley}
+\newdate{CODAManualDate}{25}{09}{2015}
+\date{%
+  Version 3 rc1\\%
+  \displaydate{CODAManualDate}%
+}
 
 \begin{document}
+\maketitle
 
-\chapter{CODA VHDL User Manual}
+\tableofcontents
+
+\chapter{Introduction}
+\subimport*{./}{introduction}
+
+\part{CODA Modelling Language}
+
+\part{Modelling}
+
+\chapter{CODA Component Diagrams User Manual and Tutorial}
+\label{cha:coda-component-user}
+\subimport*{component_diagrams/}{component_diagrams-user_manual.tex}
+
+\part{Validation}
+
+\chapter{CODA Simulator 2}
+\label{cha:coda-simulator-2}
+
+\subimport*{simulator2/}{simulator2-user_manual.tex}
+
+\part{Code Generation}
+
+\chapter{CODA VHDL Generator}
 \label{cha:coda-vhdl-user}
 
-\subimport*{vhdl/}{vhdl_user_manual.tex}
+\subimport*{vhdl/}{vhdl-user_manual.tex}
+
+\part{Miscellaneous}
+\label{part:miscellaneous}
+
+\chapter{CODA Software User Agreement}
+\label{cha:coda-software-user-agreement}
+\input{coda-user_agreement}
+
 
 \end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
