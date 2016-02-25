@@ -9,6 +9,8 @@
 \ifplastex\else
 \usepackage{standalone} %%%% Only load standalone when not in plasTeX
 \standalonetrue
+\usepackage{longtable} %%%% Only load longtable and ltcaption when not in plasTeX
+\usepackage{ltcaption}
 \fi
 
 % Package for typesetting URLs
@@ -27,11 +29,12 @@
 
 % Package for typesetting dates and times
 \ifplastex
-\newcommand{\VHDLManualDate}{February 6th, 2016}
+\newcommand{\VHDLManualDate}{February 25th, 2016}
 \else
 \usepackage{datetime}
-\newdate{VHDLManualDate}{6}{2}{2016}
+\newdate{VHDLManualDate}{25}{2}{2016}
 \fi
+\newcommand{\VHDLFeatureVersion}{0.0.3}
 \newcommand{\VHDLManualVersion}{0.0.1}
 
 \usepackage{vhdl}
@@ -50,6 +53,7 @@
 % Date
 \date{%
   Version \VHDLManualVersion\\%
+  (for feature version \VHDLFeatureVersion)\\
   \ifplastex
   \VHDLManualDate
   \else

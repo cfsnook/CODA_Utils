@@ -5,7 +5,11 @@
 \label{sec:vhdl-behavioural}
 We use a subset of the behavioural VHDL syntax as defined in the VHDL standard 1076.
 
+\ifplastex
 \begin{VHDLcode}[\footnotesize]
+\else
+\begin{VHDLlongcode}[\footnotesize]
+\fi
   DesignFile & ::= & DesignUnit+ \\
   DesignUnit & ::= & ContextItem* LibraryUnit \\
   ContextItem & ::= & LibraryClause | UseClause \\
@@ -23,7 +27,7 @@ We use a subset of the behavioural VHDL syntax as defined in the VHDL standard 1
                               &      & \VHDLEND{} Identifier \\
   InterfaceList & ::=  & InterfaceElement (\VHDLSemicolon{} InterfaceElement)* \\
   InterfaceElement & ::= & InterfaceSignalDeclaration | \\
-  InterfaceSignalDeclaration & ::= & [\VHDLSIGNAL] Identifier [Mode] SubtypeIndication \\
+  InterfaceSignalDeclaration & ::= & [\VHDLSIGNAL] Identifier \VHDLColon{} [Mode] SubtypeIndication \\
   Mode & ::= & \VHDLIN{} | \VHDLOUT{} | \VHDLINOUT \\
   SubtypeIndication & ::= & Name \\
   EntityDeclarativeItem & ::= & TypeDeclaration \\
@@ -69,12 +73,119 @@ We use a subset of the behavioural VHDL syntax as defined in the VHDL standard 1
                            &       &  \VHDLEND{} \VHDLCASE \\
    CaseStatementAlternative & ::= & \VHDLWHEN{} Label \VHDLIMPLIES \\
                                             &      &  \VHDLTab SequentialStatement* \\
+\ifplastex
 \end{VHDLcode}
+\else
+\end{VHDLlongcode}
+\fi
 
 \subsection{VXMI}
 \label{sec:vhdl-vxmi}
-A VXMI model is a representation of a VHDL model in XML.  In the subsequent, we present some example VXMI elements and their relationships.
+A VXMI model is a representation of a VHDL model in XML.  The following are example of how a VHDL snippet is represented in a tree-shaped structured VXMI.
 
+\ifplastex
+\begin{VHDLcode}[\scriptsize]
+\else
+\begin{VHDLlongcode}[\scriptsize]
+\fi
+  \hline
+  VHDL & & VXMI \\
+  \hline
+  & & \VHDLkeyword{DesignFile} Example  \\%
+  & & \VHDLTab \VHDLkeyword{DesignUnit} \\ %
+
+  \VHDLLIBRARY{} ieee\VHDLSemicolon & & %
+  \VHDLTab \VHDLTab \VHDLkeyword{LibraryClause} \\ %
+  & & \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{LogicalName} ieee \\%
+
+  \VHDLUSE{} ieee.std\_logic\_1164.all\VHDLSemicolon & & %
+  \VHDLTab \VHDLTab \VHDLkeyword{UseClause} \\ %
+  & & \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{SelectedName}  ieee.std\_logic\_1164.all \\ %
+
+  \VHDLUSE{} ieee.std\_logic\_unsigned.all \VHDLSemicolon & & %
+  \VHDLTab \VHDLTab \VHDLkeyword{UseClause} \\ %
+  & & \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{SelectedName} 
+  ieee.std\_logic\_unsigned.all \\ %
+
+  \VHDLENTITY{} Example \VHDLIS{} & & %
+  \VHDLTab \VHDLTab \VHDLkeyword{EntityDeclaration} Example \\
+
+   \VHDLTab \VHDLPORT{} \VHDLOpenBracket & & %
+   \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{InterfaceList} \\
+
+   \VHDLTab \VHDLTab clk \VHDLColon{} \VHDLIN{} std\_logic\VHDLSemicolon  & & %
+   \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{InterfaceSignalDeclaration} clk \\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab (\VHDLkeyword{Mode} IN\_LITERAL)\\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab (\VHDLkeyword{Signal} false)\\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{SubtypeIndication} std\_logic \\
+
+   \VHDLTab \VHDLTab reset \VHDLColon{} \VHDLIN{} std\_logic\VHDLSemicolon & & %
+   \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{InterfaceSignalDeclaration} reset \\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab (\VHDLkeyword{Mode} IN\_LITERAL)\\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab (\VHDLkeyword{Signal} false)\\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{SubtypeIndication} std\_logic \\
+
+   \VHDLTab \VHDLCloseBracket \VHDLSemicolon & & \\
+
+   \VHDLTab \VHDLTYPE{} BOOL \VHDLIS{}  \VHDLOpenBracket TRUE\VHDLComma{} FALSE\VHDLCloseBracket\VHDLSemicolon & & %
+   \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{FullTypeDeclaration} BOOL \\%
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{EnumerationTypeDefinition} \\%
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{EnumerationLiteral} TRUE \\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{EnumerationLiteral} FALSE \\
+
+   \VHDLEND{} Example\VHDLSemicolon & & \\
+
+   & & \VHDLTab \VHDLkeyword{DesignUnit} \\ %
+
+   \VHDLARCHITECTURE{} behaviour \VHDLOF{} Example \VHDLIS & & %
+   \VHDLTab \VHDLTab \VHDLkeyword{ArchitectureBody} Example \\ %
+   & & \VHDLTab \VHDLTab \VHDLTab (\VHDLkeyword{Identifier} behaviour) \\ %
+   \VHDLTab \VHDLSIGNAL{} enabled \VHDLColon{} BOOL\VHDLSemicolon & & %
+   \VHDLTab \VHDLTab \VHDLTab
+\VHDLkeyword{InterfaceSignalDeclaration} enabled \\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab (\VHDLkeyword{Signal} true)\\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{SubtypeIndication} BOOL \\
+
+   \VHDLTab \VHDLSIGNAL{} cnt \VHDLColon{} int \VHDLSemicolon & &
+   \VHDLTab \VHDLTab \VHDLTab
+\VHDLkeyword{InterfaceSignalDeclaration} cnt \\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab (\VHDLkeyword{Signal} true)\\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{SubtypeIndication} int \\
+
+   \VHDLBEGIN & & \\
+
+   \VHDLTab \VHDLPROCESS{} \VHDLOF{} \VHDLOpenBracket clk\VHDLComma{} reset \VHDLCloseBracket & & %
+   \VHDLTab \VHDLTab \VHDLkeyword{ProcessStatement} \\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{SignalName} clk\\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{SignalName} reset\\
+
+   \VHDLTab \VHDLBEGIN & & \\
+
+   \VHDLTab \VHDLTab \VHDLIF{} \VHDLOpenBracket reset = '1'\VHDLCloseBracket{} \VHDLTHEN %
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{IfStatement} \\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{IfClause} reset = '1' \\
+
+   \VHDLTab \VHDLTab \VHDLTab enabled <= FALSE %
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{SignalAssignmentStatement} enabled \\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{Waveform} FALSE \\
+
+   \VHDLTab \VHDLTab \VHDLELSIF{} \VHDLOpenBracket raising\_edge(clk)\VHDLCloseBracket{} \VHDLTHEN %
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{ElsifClause} raising\_edge(clk) \\
+
+   \VHDLTab \VHDLTab \VHDLTab cnt <= cnt + 1 %
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{SignalAssignmentStatement} cnt \\
+   & & \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLTab \VHDLkeyword{Waveform} cnt + 1 \\
+
+   \VHDLTab \VHDLTab \VHDLEND{} \VHDLIF \VHDLSemicolon \\
+   \VHDLTab \VHDLEND{} \VHDLPROCESS \VHDLSemicolon \\
+
+   \VHDLEND & & \\
+
+\ifplastex
+\end{VHDLcode}
+\else
+\end{VHDLlongcode}
+\fi
 
 %%% Local Variables:
 %%% mode: latex

@@ -1,0 +1,70 @@
+%\RequirePackage{etoolbox}
+\RequirePackage{color}
+
+\newcommand{\newVHDLkeyword}[2][]{\VHDL@newmacro[#1]{#2}{\VHDLkeyword}}
+
+\newcommand{\VHDL@keywordbase}[1]{\texttt{#1}}
+%\newcommand{\VHDL@keyword}[1]{\ensuremath{\textcolor{blue}{\VHDL@keywordbase{#1}}}}
+\newcommand{\VHDL@keyword}[1]{\textcolor{blue}{\VHDL@keywordbase{#1}}}
+\let\VHDLkeyword\VHDL@keyword
+\newcommand{\VHDLLIBRARY}{\VHDL@keyword{LIBRARY}}
+\newcommand{\VHDLUSE}{\VHDL@keyword{USE}}
+
+\newcommand{\VHDLENTITY}{\VHDL@keyword{ENTITY}}
+\newcommand{\VHDLPORT}{\VHDL@keyword{PORT}}
+\newcommand{\VHDLARCHITECTURE}{\VHDL@keyword{ARCHITECTURE}}
+\newcommand{\VHDLPROCESS}{\VHDL@keyword{PROCESS}}
+\newcommand{\VHDLBEGIN}{\VHDL@keyword{BEGIN}}
+\newcommand{\VHDLEND}{\VHDL@keyword{END}}
+\newcommand{\VHDLOF}{\VHDL@keyword{OF}}
+\newcommand{\VHDLIS}{\VHDL@keyword{IS}}
+\newcommand{\VHDLIN}{\VHDL@keyword{IN}}
+\newcommand{\VHDLOUT}{\VHDL@keyword{OUT}}
+\newcommand{\VHDLINOUT}{\VHDL@keyword{INOUT}}
+\newcommand{\VHDLSIGNAL}{\VHDL@keyword{SIGNAL}}
+\newcommand{\VHDLTYPE}{\VHDL@keyword{TYPE}}
+\newcommand{\VHDLASSERT}{\VHDL@keyword{ASSERT}}
+\newcommand{\VHDLIF}{\VHDL@keyword{IF}}
+\newcommand{\VHDLELSIF}{\VHDL@keyword{ELSIF}}
+\newcommand{\VHDLELSE}{\VHDL@keyword{ELSE}}
+\newcommand{\VHDLTHEN}{\VHDL@keyword{THEN}}
+\newcommand{\VHDLCASE}{\VHDL@keyword{CASE}}
+\newcommand{\VHDLWHEN}{\VHDL@keyword{WHEN}}
+\newcommand{\VHDLIMPLIES}{\VHDL@keyword{=>}}
+\newcommand{\VHDLSemicolon}{\VHDL@keyword{;}}
+\newcommand{\VHDLColon}{\VHDL@keyword{:}}
+\newcommand{\VHDLComma}{\VHDL@keyword{,}}
+\newcommand{\VHDLOpenBracket}{\VHDL@keyword{(}}
+\newcommand{\VHDLCloseBracket}{\VHDL@keyword{)}}
+\newcommand{\VHDLTab}{
+  \ifplastex
+  \quad \quad
+  \else
+  \ \ 
+  \fi
+}
+
+\newenvironment{VHDLcode}[1][]
+{%
+  \ttfamily%
+  #1
+  \begin{tabular}{llllll}
+}
+{%
+  \end{tabular}
+  \par
+}
+\newenvironment{VHDLlongcode}[1][]
+{%
+  \ttfamily%
+  #1
+  \begin{longtable*}{llllll}
+    \endfirsthead
+    \endhead
+    \endfoot
+    \endlastfoot
+}
+{%
+  \end{longtable*}
+  \par
+}
