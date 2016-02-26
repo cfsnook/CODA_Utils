@@ -57,7 +57,7 @@ task bibtex(type: Exec) {
   commandLine BIBTEX, BASENAME
 }
 
-task pdf(type : Exec) {
+task pdfBuild(type : Exec) {
   dependsOn aux
   inputs.files BBLFile, fileTree('.').include('**/*.tex'), fileTree('.').include('**/*.sty')
   outputs.file PDFFile
@@ -72,12 +72,10 @@ task pdf(type : Exec) {
   }   
 }
 
-task pdfDocument(type: Exec) {
-  dependsOn pdf
-  inputs.files PDFFile
-  outputs.file DOCUMENTATION_FOLDER + PDFFile
-
-  commandLine 'cp', PDFFile, DOCUMENTATION_FOLDER + PDFFile
+task pdf(type: Copy) {
+  dependsOn pdfBuild
+  from PDFFile
+  into DOCUMENTATION_FOLDER
 }
 
 task plastex(type: Exec) {
@@ -92,5 +90,5 @@ task clean(type: Exec) {
 }
 
 task build {
-  dependsOn 'pdfDocument', 'plastex'
+  dependsOn 'pdf', 'plastex'
 }
