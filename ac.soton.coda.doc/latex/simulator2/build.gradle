@@ -1,0 +1,94 @@
+/**
+ * Copyright (C) 2016 Thai Son Hoang
+ * Gradle LaTeX build file.
+ *
+ * Contributors
+ *   Thai Son Hoang - Initial API and implementation.
+ */
+
+defaultTasks 'pdf'
+
+/**
+ * Extra Properties:
+ * - The base name for the main LaTeX file
+ * - The LaTeX Program
+ */
+ext {
+  BASENAME = 'simulator2-user_manual'
+  LATEX = 'pdflatex'
+  BIBTEX = 'bibtex'
+  REQUIRED_FILES = ['plastex.sh', 'plastex.sty', 'sed_commands', 'coda-user_agreement.tex']
+  COPY_TASK_PREFIX = 'copySty'
+  ROOT_FOLDER = '../../../..'
+  HTML_FOLDER = ROOT_FOLDER + '/code/ac.soton.coda.simulator2.doc/html'
+  DOCUMENTATION_FOLDER = ROOT_FOLDER + '/documentations'
+}
+
+/* The project */
+project.ext {
+  TEXFile = BASENAME + '.tex'
+  AUXFile = BASENAME + '.aux'
+  BIBFile = BASENAME + '.bib'
+  BBLFile = BASENAME + '.bbl'
+  PDFFile = BASENAME + '.pdf'
+}
+
+REQUIRED_FILES.each { def styFile -> 
+  task "$COPY_TASK_PREFIX $styFile"(type: Exec) {
+    inputs.file "../$styFile"
+    outputs.file styFile
+    commandLine 'cp', "../$styFile", "$styFile"
+  }
+} 
+
+task aux(type : Exec) {
+  dependsOn tasks.matching {
+    Task task -> task.name.startsWith(COPY_TASK_PREFIX)
+  }
+  inputs.files fileTree('.').include('**/*.tex'), REQUIRED_FILES
+  outputs.file AUXFile
+  commandLine LATEX, "$project.TEXFile"
+}
+
+task bibtex(type: Exec) {
+  dependsOn aux
+  inputs.files AUXFile
+  outputs.file BBLFile
+  commandLine BIBTEX, BASENAME
+}
+
+task pdfBuild(type : Exec) {
+  dependsOn aux
+  inputs.files BBLFile, fileTree('.').include('**/*.tex'), fileTree('.').include('**/*.sty')
+  outputs.file PDFFile
+  doFirst {
+    println "First run the $project.TEXFile"
+  }
+
+  commandLine LATEX, "$project.TEXFile"
+
+  doLast {
+    println "Compiled $project.TEXFile to $project.PDFFile"
+  }   
+}
+
+task pdf(type: Copy) {
+  dependsOn pdfBuild
+  from PDFFile
+  into DOCUMENTATION_FOLDER
+}
+
+task plastex(type: Exec) {
+  dependsOn aux
+  inputs.files BBLFile, fileTree('.').include('**/*.tex'), fileTree('.').include('**/*.sty')
+  outputs.dir HTML_FOLDER
+  commandLine './plastex.sh', BASENAME, HTML_FOLDER
+}
+
+task clean(type: Exec) {
+  commandLine 'rm', '-rf', '*.aux', '*.log', '*.rel', '*.paux', '*.out', '*.synctex.gz', '*.toc'
+}
+
+task build {
+  dependsOn 'pdf', 'plastex'
+}
