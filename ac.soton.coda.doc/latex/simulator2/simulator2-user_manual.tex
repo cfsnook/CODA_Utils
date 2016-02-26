@@ -1,0 +1,58 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[preview=false]{standalone}
+% %%%% Define new conditional \ifplastex
+% %%%% This ensure that the file complied normally without plasTeX.
+\usepackage{plastex}
+
+\ifplastex\else
+\usepackage{standalone} %%%% Only load standalone when not in plasTeX
+\standalonetrue
+\fi
+
+% % Package for typesetting URLs
+\usepackage{url}
+
+\usepackage{import}
+
+% % Title
+\title{CODA Simulator 2 (for ProB2) User Manual} 
+
+% % Author
+\author{Thai Son Hoang \\ University of Southampton}
+
+% % Date
+\date{%
+  Version 0.0.1\\%
+  \today%
+}
+
+\begin{document}
+\ifplastex%
+\maketitle% Make title if in plasTeX mode.
+\else%
+ \ifstandalone%
+ \maketitle % Make title if in standalone mode.
+ \else%
+ \fi%
+\fi%
+
+The CODA VHDL Generator feature provides facilities to generate VHDL behavioural code and testbench from CODA models. 
+
+\input{simulator2-getting_started}
+
+\input{simulator2-concepts}
+
+\input{simulator2-tasks}
+
+\input{simulator2-reference}
+
+\input{simulator2-samples}
+
+\input{simulator2-legal}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
