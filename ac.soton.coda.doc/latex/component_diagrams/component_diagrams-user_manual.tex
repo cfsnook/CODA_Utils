@@ -1,0 +1,56 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[preview=false]{standalone}
+% %%%% Define new conditional \ifplastex
+% %%%% This ensure that the file complied normally without plasTeX.
+\usepackage{plastex}
+
+\ifplastex\else
+\usepackage{standalone} %%%% Only load standalone when not in plasTeX
+\standalonetrue
+\fi
+
+% % Package for typesetting URLs
+\usepackage{url}
+
+\usepackage{import}
+
+% % Title
+\title{CODA Component Diagrams User Manual} 
+
+% % Author
+\author{Colin Snook and John Colley\\University of Southampton}
+
+% % Date
+\date{%
+  Version 0.0.1\\%
+  \today%
+}
+
+\begin{document}
+\ifplastex%
+\maketitle% Make title if in plasTeX mode.
+\else%
+ \ifstandalone%
+ \maketitle % Make title if in standalone mode.
+ \else%
+ \fi%
+\fi%
+
+\input{component_diagrams-getting_started}
+
+\input{component_diagrams-concepts}
+
+\input{component_diagrams-tasks}
+
+\input{component_diagrams-reference}
+
+\input{component_diagrams-samples}
+
+\input{component_diagrams-legal}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
