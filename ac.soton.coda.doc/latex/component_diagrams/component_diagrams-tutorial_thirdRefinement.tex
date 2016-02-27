@@ -1,0 +1,28 @@
+\subsection{The Third Refinement}
+\label{sec:component_diagrams-tutorial_thirdRefinement}
+ 
+Now we refine the notion of the Program. We associate with each PID a washTime, rinseTime and spinTime and also introduce a WashCount and SpinCount as shown in Figure 35. These properties constrain and make deterministic the operation of the washing machine sub-system for a given PID.
+ 
+Figure 35 - Adding Wash Program Details to the Model
+ 
+The delay introduced for each wash mode is modelled using a SelfWake as shown for the rinse mode in Figure 36.
+ 
+Figure 36 - Introducing Wash Program Delays using Self Wakes
+ 
+The number of washes or rinses associated with a program is modelled using a counter which is decremented and hence completes at rinseCounter = 0, as shown in Figure 37.
+ 
+Figure 37 - Introducing Wash Program Cycles using Guards
+ 
+Again, the model checker is run to verify that no deadlocks have been introduced into the system. Since this refinement is only to strengthen the guards, invariant preservation is not an issue in this refinement. Note that as shown in Figure 38, full operation coverage is achieved. The program constraints introduced in this refinement have reduced the model state space. 
+ 
+Figure 38 - ProB Model Checking Coverage for the Third Refinement
+ 
+The state machine is shown in Figure 39 below. Invariants concerning the counters have been added to the INPROGRESS and RINSING states. These invariants help ensure that no mistakes have been made in constructing the counters.
+ 
+Figure 39 - State-machine for the Third Refinement 
+ 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "component_diagrams-user_manual"
+%%% End:

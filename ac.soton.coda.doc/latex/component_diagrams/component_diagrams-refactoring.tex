@@ -1,0 +1,53 @@
+\section{Refactoring}
+\label{sec:component_diagrams-refactoring}
+
+A refactoring facility is provided in iUML-B that allows a set of changes made to the collection of iUML-B diagrams in an abstract model to be propagated down the refinement chain as part of a commit action. Alternatively, the set of changes can be reverted, restoring the model to its pre-change state.Changes cannot be committed (hence propagated) when a lower refinement also has uncommitted changes. I.e. if several refinements have uncommitted changes they must be committed or reverted in order starting from the most refined level and working up the refinement chain. Changes are only propagated to a refinement when they are still relevant to the refinement. Changes may have already been made in the refinement, as part of the refinement process, that mean that a subsequent change in the abstract model cannot be propagated. For example the parent element of a changed attribute may have been removed and replaced with a different model element or a guards predicate may have been edited to utilise new variables introduced in the refinement. Changes to Event-B formula attributes (i.e. predicates and actions) are only propagated when the equivalent refined formula is unchanged except for formatting (whitespace).
+\subsection{Enabling Refactoring}
+The refactoring facility may be enabled or disabled in the iUML-B preferences menu. The current default is DISABLED.  WARNING: If this preference is disabled while there are outstanding, uncommitted changes, and the associated model is then edited without refactoring being enabled, those change records will become invalid and wont be able to be propagated at a later stage.
+
+Figure 55 - Preference for enabling refactoring.
+\subsection{Automatic Archiving}
+An archive of the complete project including any change records and reports is made before a commit is attempted. This is in case an unexpected event such as power failure should cause the commit to fail leaving the model in a corrupted state. In this case the project should be deleted and restored from the archive using the standard Eclipse import facility (\textbf{\texttt{Import - General - Existing Projects into Workspace - Select archive file}}).
+
+\subsection{Decorator}
+Machines with outstanding, uncommitted changes are decorated in the Event-B Explorer. 
+
+Figure 56 - Decorator indicating outstanding recorded changes (see M0).\subsection{Refactoring Menu: Commit and Revert}
+The Commit and Revert actions are accessed from a pop-up context menu, by right clicking on a machine that has outstanding uncommitted changes.
+
+Figure 57 - Context menu for Commit/Revert.
+
+\textbf{Commit} -When Commit is selected for a machine that has outstanding uncommitted changes, firstly an information and confirmation message appears. This gives the user a chance to cancel since the Commit operation is a significant process that can only be reversed by restoring from archive.
+
+Figure 58 - Commit confirmation message.
+If ok is selected on Mi, the following steps will be taken\begin{enumerate}
+\item any open diagrams will be closed, \item the project will be archived,\item the recorded changes for Mi will be propagated to the next level refinement Mi+1 (if any),\item the changes made to the refinement Mi+1 will be recorded,\item the previous change records for Mi will be deleted,\item all diagrams of the previous model Mi will be generated,\item steps 3 to 6 will be repeated for the refinement Mi+1,\item a report of the complete process will be saved.
+\end{enumerate}
+
+\textbf{Revert} -When Revert is selected for a machine that has outstanding uncommitted changes, firstly an information message appears. This gives the user a chance to cancel since the Revert operation is a significant process that cannot be reversed.
+
+Figure 59 - Revert confirmation message.
+If ok is selected on a machine Mi, the following steps will be taken\begin{enumerate}
+\item any open diagrams will be closed,\item the changes made to Mi will be reverted taking the model back to its original state,\item the change records for Mi will be deleted,\item all diagrams of Mi will be generated.
+\end{enumerate}
+
+\textbf{No Changes} - If Commit or Revert are selected for a machine that has no recorded changes, an appropriate message is displayed and no further action is taken.
+
+Figure 60 - No changes error message.
+
+\subsection{Resources: Change Records and Reporting}
+Various resources are created to support refactoring. In normal use it is not necessary to access these resources and they are not visible in the Event-B Explorer by default. If it is wished to examine the generated reports or the change records they can be viewed either by opening a standard eclipse workspace file navigator or Project Explorer (using Window-Show View) or by un-selecting the All files and folders filter of the Event-B Explorer. (The second method is shown here).
+
+Figure 61 - Removing \texttt{All files and folders} filter for Event-B Explorer.
+
+The various resources that are generated are as follows. As soon as a supported editor is opened two files will appear in a folder called /iumlb/changes/ within the project. These are:$<$myMachine$>$\_bum.xmb  -  a copy of the pre-change state of the model,$<$myMachine$>$\_bum.equivmap - a map from the elements in the xmb file to the corresponding elements in the Rodin  model. These files can be opened for examination but if they are edited the refactoring process is likely to fail. The xmb file can be opened with an EMF editor such as Rose. The equivmap file can be opened with a normal text editor.As soon as some changes to the diagram are saved a change record will appear in the same folder, $<$myMachine$>$\_bum.changes.  Again, the file can be opened with an EMF editor such as Rose but any alterations are likely to cause the refactoring process to fail.
+
+Figure 62 - Changes resources produced for refactoring.
+Note: If these three files are deleted the project will be left in its current state with no record of changes. This can be useful if for some reason it is wished to neither commit nor revert the changes but to leave the models as they are with the abstract model edited but the changes not propagated. If the changes are reverted, once the revert process has completed, these three files are deleted.If the changes are committed, once the commit has completed, these three files are deleted and a file $<$myMachine$>$\_bum.$<$timestamp$>$.report is created in the folder /iumlb/reports/. This is a text file giving a detailed record of the changes made down the refinement chain.
+
+Figure 63 - Reports produced by refactoring
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "component_diagrams-user_manual"
+%%% End:

@@ -1,0 +1,23 @@
+\section{Tutorial}
+\label{sec:component_diagrams-tutorial}
+
+This section illustrates the use of the CODA modelling tool and a proposed methodology via an example model development. The tutorial shows how to construct models using the tool, how to add detail through refinement, and how to verify and validate the models using the ProB model-checker and the CODA Simulator. The models are also verified by proof but interactive proof (when proof obligations are not discharge automatically) is beyond the scope of this tutorial.
+ 
+ \input{component_diagrams-tutorial_topLevelAbstractModel}
+ \input{component_diagrams-tutorial_firstRefinement}
+ \input{component_diagrams-tutorial_secondRefinement}
+ \input{component_diagrams-tutorial_thirdRefinement}
+ \input{component_diagrams-tutorial_fourthRefinement}
+ \subsection{Further Refinements}
+ The refinement strategy that has been established in the earlier refinements can continue as the agitator motor and heater components are introduced. At each stage the abstract washing machine sub-system component is constrained until it finally represents just the
+  hardware/software controller
+   that is being developed for the washing machine.
+ \subsection{Running the Oracle Simulator}
+ The CODA simulator can be used at every refinement step to establish a set of regression tests and golden results. Figure 48 illustrates the state of the system at times 10, 14, 15 and 18.Figure 48 - Snapshots of CODA Simulator at Times 10, 14, 15 and 18
+ \subsection{Conclusion}
+ A method for system modelling and refinement has been illustrated using the washing machine case study example. Modelling begins with an abstract state machine model of the system, which is systematically refined into a set of communicating processes - the hardware/software controller under development and the components that represent the controller environment.At each refinement step, formal proof and model checking is used to validate the model against the requirements and to show absence of deadlock.The final hardware/software controller component can then be verified within a component-based environment using the CODA Oracle Simulator.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "component_diagrams-user_manual"
+%%% End:

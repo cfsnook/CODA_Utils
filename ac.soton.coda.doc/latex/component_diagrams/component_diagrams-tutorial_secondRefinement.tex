@@ -1,0 +1,47 @@
+\subsection{The Second Refinement}
+\label{sec:component_diagrams-tutorial_secondRefinement}
+
+
+The washing machine sub-system component is now further refined, as shown in Figure 26, into two components, the DOOR sub-system and an abstract component, WM, that represents the rest of the washing machine sub-system. Two connectors enable communication between these two components. The first, lock, passes a Boolean signal to the DOOR sub-system to lock the door. The second, doorPosition, informs the Washing Machine sub-system when the door is opened or closed.
+ 
+Figure 26 - Second Refinement of Washing Machine
+
+Note that the DOOR component has two external operations, closeDoor and openDoor, which represent the interaction of the user with the door. Care is needed in this refinement to ensure that the system cannot get into an unsafe state; the door should always be locked when the washing machine is washing, rinsing or spinning so that the user cannot inadvertently open the door and release potentially very hot water.
+The state-machine for the washing machine is refined to split the WASHING state into sub-states LOCKINGDOOR and INPROGRESS and IDLE into UNLOCKINGDOOR and IDLEWAITING, Figure 27. This is necessary to accommodate the new transitions concerned with locking and unlocking the door.
+ 
+Figure 27 - Second Refinement : Refined State-machine of the Washing Machine
+
+An invariant, DOORLOCKED  = TRUE, is introduced in the sub-system state machine for states INPROGRESS, RINSING and SPINNING.
+The state machine for the door sub-system is shown in Figure 28. The door may be open (DOOROPEN) in which case any instructions to lock the door are ignored (ignoreLock) or it may be closed (DOORCLOSED). When the door is closed it may be unlocked (DOORUNLOCKED) or locked (DOORLOCKED). Note that the transitions unlockDoor and lockDoor are drawn with the superstate DOORCLOSED as their source indicating that they can fire irrespective of whether the door is locked or not.
+ 
+Figure 28 - Second Refinement : State-machine for the Door Component
+
+The washing machine sub-system sends a message via the lock connector to the door sub-system to lock the door if it has received a message from the door via the doorPosition connector indicating that the door is closed.  The washing machine sub-system then initiates a self-wake, delayed by 3 time units, as shown in Figure 29. If the door is still closed at the self-wake, as indicated by the guard 
+WM\_doorPosition = CLOSED,  then it is assumed that the door is locked and the system can proceed to the INPROGRESS state. The alternative transition (Figure 27) is abortWash which has the negated guard  WM\_doorPosition $\neq$ CLOSED.
+ 
+Figure 29 - Second Refinement : Self Wake to Check Door Locked
+
+The proof obligations generated for the safety invariant are difficult to discharge. It is a good idea at this stage to proceed immediately to animation and model checking, to ensure that the model behaves as expected.
+Model checking does indeed show immediately that the safety invariant is violated and provides a counterexample in the history pane as shown in Figure 30.
+ 
+Figure 30 - Counterexample Discovered by ProB
+
+Although the refinement models the latency that certainly exists between the washing machine sub-system and door sub-system, it allows the user to open and close the door repeatedly in zero-time. Modelling this Zeno Behaviour is unrealistic and results in a scenario where the user can close the door and then open it again immediately just before it is locked.
+The solution is to model more realistically the latency that must exist in the opening and closing of the door by introducing a delay on the External Event, closeDoor, as shown in Figure 31. The guard  \textbf{\texttt{current\_time $>$ DOOR\_latency}}, where DOOR\_latency is a variable that is set to current\_time + 1 by any preceding door open or close events, ensures that two door events cannot occur on consecutive clock ticks. This corresponds to an assumption that the systems time response makes it impossible to open and close the door without it being detected. This is sufficient to ensure that any changes of door state are successfully transmitted to the WM component.
+ 
+Figure 31 - Introducing Latency to the Door Operations
+ 
+The model checker is re-run to verify that the invariant violation has been addressed and that there is no deadlock, as shown in Figure 32. Note now, that the model checking results show that not all operations have been covered, though examination of the guards and actions of these uncovered operations show that none are material to the invariant violation being investigated. Although not a proof, model checking with operation coverage gives confidence that the model is behaving as expected.
+ 
+Figure 32 - ProB Model Checking Coverage for the Second Refinement 
+ 
+To improve operation coverage, it is a good idea to try the alternative Breadth First Search option. Figure 33 shows the improved coverage results and Figure 34 shows how this option is set.
+ 
+Figure 33 - ProB Model Checking Coverage for the Second Refinement : Breadth First
+ 
+Figure 34 - Configuration for ProB Model Checker Breadth First Option
+ 
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "component_diagrams-user_manual"
+%%% End:

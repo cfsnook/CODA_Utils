@@ -1,0 +1,45 @@
+\subsection{The Fourth Refinement}
+\label{sec:component_diagrams-tutorial_fourthRefinement}
+
+ 
+The washing machine sub-system is now further partitioned into 2 components: the drum sub-system and an abstract component representing the remaining washing machine sub-system, following the pattern of previous refinements.
+The component diagram is shown in Figure 40.
+Three boolean connectors pass messages from the washing machine sub-system to the drum to open and close the hot or cold water valves and to switch the drain pump on or off. Two further natural number connectors pass the water level and the water temperature back from the drum to the washing machine sub-system.
+ 
+Figure 40 - Fourth Refinement of Washing Machine
+ 
+The state machine for the drum sub-system is shown in Figure 41.
+ 
+Figure 41 - Fourth Refinement : State-machine for the Drum Component
+ 
+The washing machine state machine is now further refined to manage the filling and emptying of the drum by monitoring the water level as shown in Figure 42.
+ 
+Figure 42 - Fourth Refinement : Refined State-machine of the Washing Machine
+ 
+The value TRUE is sent on the coldFill connector as shown in Figure 43.
+ 
+Figure 43 - Fourth Refinement : Port Send on the coldFill Connector
+ 
+The drum sub-system receives the value on the coldFill connector and starts filling the drum (Figure 44).
+ 
+Figure 44 - Fourth Refinement : Port Wake on the coldFill Connector
+ 
+The drum sub-system sends the value of water level and water temperature repeatedly at unit delay intervals using the self-wake operation sendLevel of Figure 45.
+ 
+Figure 45 - Fourth Refinement : Self Wake to Repeatedly Send on level and temp Connectors
+ 
+The washing machine sub-system switches off the water valve when it detects that the water level associated with the PID has been reached, as shown in Figure 46.
+
+ 
+Figure 46 - Fourth Refinement : Guarded Port Wake to Respond when Level Reached
+ 
+The model checker is run again to show absence of deadlock. Note that because of the added complexity of this refinement, not all operations are covered (Figure 47). Sufficient operations, however, have been covered to give confidence that filling operation is performing satisfactorily.
+ 
+Figure 47 - ProB Model Checking Coverage for the Fourth Refinement
+ 
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "component_diagrams-user_manual"
+%%% End:

@@ -1,7 +1,29 @@
-\section{Concepts}
-\label{sec:component_diagrams-concepts}
+\section{Context}
+\label{sec:component_diagrams-context}
 
-Event-B \footnote{http://wiki.event-b.org/index.php/Event-B_Language}  is a formal modelling language for describing systems in terms of some state and some guarded events that alter that state. Central to Event-B is the notion of refinement that allows essential properties to be expressed at a very abstract (hence simple and clear) level and then progressive refinements allow more and more detail to be added until the full detail of the system has been described. At each refinement the consistency of the model has to be proven including the correctness of the refinement (i.e. that no new traces have been introduced and that the refined state has equivalence with the abstract state). The Rodin toolset  is an extensible environment for modelling with Event-B. It includes automatic tools to generate proof obligations of the model’s consistency and provers that attempt to automatically discharge these obligations. ProB  is a model checker and animator that is available as an extension to the Rodin toolset.Rodin is based on the Eclipse  development environment. Many of the Rodin modelling and verification extensions make use of the EMF  (Eclipse Modelling Framework) and GMF  (Graphical Modelling Framework) technologies.To aid clarity in this document, the following conventions are used. Eclipse and CODA tool commands are shown in bold in a code style font. E.g. General - Existing Projects into Workspace.Tool and model artefacts such as meta-class names are given in a code style font. E.g. PortWake.
+Event-B\footnote{\url{http://wiki.event-b.org/index.php/Event-B_Language}} is a formal modelling language for describing systems in terms of some state and some guarded events that alter that state. 
+Central to Event-B is the notion of refinement that allows essential properties to be expressed at a
+very abstract (hence simple and clear) level and then progressive refinements allow more 
+and more detail to be added until the full detail of the system has been described.
+At each refinement the consistency of the model has to be proven including the correctness of the refinement
+ (i.e. that no new traces have been introduced and that the refined state has equivalence with the abstract state). 
+
+
+The Rodin toolset\footnote{\url{http://sourceforge.net/projects/rodin-b-sharp}} is an extensible environment for  modelling Event-B.
+It includes automatic tools to generate proof obligations of the model's consistency and provers that attempt to automatically discharge these obligations. 
+ ProB\footnote{\url{http://www.stups.uni-duesseldorf.de/ProB/index.php5/The_ProB_Animator_and_Model_Checker}}  is a model checker and animator 
+ that is available as an extension to the Rodin toolset.
+
+
+Rodin is based on the Eclipse\footnote{\url{http://www.eclipse.org}} development environment. Many of the Rodin modelling and verification extensions 
+ make use of the EMF\footnote{\url{http://www.eclipse.org/modeling/emf/}} (Eclipse Modelling Framework) and GMF\footnote{\url{http://www.eclipse.org/modeling/gmp}} 
+ (Graphical Modelling Framework) technologies.
+ 
+ 
+To aid clarity in this document, the following conventions are used. Eclipse and CODA tool commands 
+ are shown in bold in a code style font. E.g. \textbf{\texttt{General - Existing Projects into Workspace}}.
+Tool and model artefacts such as meta-class names are given in a italics. E.g. \emph{PortWake}.
+
 
 %%% Local Variables:
 %%% mode: latex
