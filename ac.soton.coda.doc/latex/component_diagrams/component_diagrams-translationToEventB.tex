@@ -1,6 +1,85 @@
 \section{Translation to Event-B}
 \label{sec:component_diagrams-translation}
 
+
+Key:\begin{itemize}
+\item Transition Identifier\item Wake Queue Identifier\item Connector Identifier\item Connector Type\item Connector Value\item Time Interval (NAT)
+\end{itemize}
+
+\subsection{Current time}
+A variable current\_time models the progression of time slices.  Generated once per model.
+ \begin{table}[htbp]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+SOURCE & \multicolumn{2}{l|}{GENERATED} \\ \hline
+\multirow{3}{*}{For each root component model} & VARIABLE & current\_time \\ \cline{2-3} 
+ & INVARIANT & current\_time $\in$ NAT\\ \cline{2-3} 
+ & INITIALISATION & current\_time = 0 \\ \hline
+\end{tabular}
+\caption{Translation of root components to current\_time variables}
+\label{transaltion-CurrentTime}
+\end{table}
+ 
+If there is more than one root component model in a machine, the root component name will be used as a prefix for each current\_time variable.
+\subsection{Connector}
+ A Connector is a special kind of a variable with a different translation. 
+ 
+TODO: TABLE TO GO HERE
+
+ \subsection{Component Wake-up}
+A component can be scheduled to wake at some time interval in the future by adding to a queue of wake events. The wake may occur non-deterministically within a specified time interval . A component may have a number of different wake queues for different purposes and to allow new wake-ups to be added in refinements. Each wake queue generates two extra variables to contain the schedule event times for enabling the wake events and disabling the timer. This is implemented so as to allow for different kinds of wake event, for example, a collection of interrupt priorities. At the moment only one kind (AddEvent) will be used. A further kind (NullEvent) is reserved for null queue entries, such as the initial one queued at initialisation (which is there to avoid well-definedness problems with max. These entries have no effect. A synchronisation variable is also generated for each wake queue to provide a way to synchronise the wake events with the timer. It is a set containing the min times of all wake events that have been serviced.
+ 
+ TODO: TABLE TO GO HERE
+ 
+
+%
+\subsection{Synchronisation of Operations}
+
+\subsubsection{External and Transition Operations}
+An External operation is a special kind of operation that represents a response to some external trigger event (e.g. a button press). A Transition operation must be linked to an event that is also linked to by a transition in a state-machine that is contained in the same component.Both External and Transition operations are un-synchronised with the clock. They shall not be triggered by connectors and are not scheduled by self-wakes. They may read and write to connectors and call other methods and may schedule component wake events.
+\subsubsection{Port-Wake Operations}
+For synchronisation, port-wake operations are grouped according to the combination of incoming connectors that they respond to. Therefore if two port-wake operations in the same component have port-wake properties on the same group of connectors they will use the same synchronisation flag and hence exactly one of them will respond to the simultaneous arrival of data on that group of connectors.  Which one does so may be controlled via other guards such as particular values arriving on the connectors.
+
+TODO: TABLE TO GO HEREPort-wake operations are synchronised using these flags.
+
+TODO: TABLE TO GO HEREPort-wake operations are triggered by values arriving on connectors.
+
+TODO: TABLE TO GO HERE\subsubsection{Self-Wake Operations}
+When a component wake up event is reached, all of the components self-wake operations that are waiting on that wake queue are enabled subject to their other guards. This enablement remains even if the current\_time is further increased. They are also guarded by (and set) the wake queues synchronisation variable to ensure that exactly one self-wake operation responds to the wake event. The synchronisation variable contains the min times of all the wake events from that queue that have been processed. If the latest (i.e. maximum) min time is not in the synchronisation variable, the event is enabled. (Note that the timer is not prevented from progressing until the max time for the wake event is reached).
+
+TODO: TABLE TO GO HERE\subsubsection{Method Operations}
+A method is a special kind of synchronised operation that is called directly from another operation. Methods shall not be triggered by connectors and shall not be re-scheduled by self-wakes. Methods may read and write to connectors and call other methods. 
+
+TODO: TABLE TO GO HERE
+
+\subsection{Actions by Operations}
+Every operation (both synchronised and un-synchronised) may call method operations.
+
+TODO: TABLE TO GO HERE
+Every operation (both synchronised and un-synchronised) may send to connectors.
+
+TODO: TABLE TO GO HEREEvery operation (both synchronised and un-synchronised) may set wake events.
+
+TODO: TABLE TO GO HERE\subsection{Synchronised State-machines}
+Synchronised state machines are synchronised with the timer so that while they are enabled, exactly one transition is taken per clock tick. The state-machine becomes enabled when its initial transition is taken and becomes disabled when its final transition is taken. The following is in addition to the normal state machine generation, which is not part of CODA.Enable and synchronisation flags are generated for each synchronised state-machine.
+
+TODO: TABLE TO GO HEREFor each transition in a synchronised statemachine, the flags are used as follows:
+
+TODO: TABLE TO GO HERE
+
+\subsection{Process Statemachines}
+Process state machines represent a sequence of steps (forming a process) which, once enabled, runs and completes within a single timer tick. The state-machine becomes enabled when its initial transition is taken and becomes disabled when its final transition is taken. While the statemachine is enabled the timer is disabled. The following is in addition to the normal state machine generation, which is not part of CODA. The initial transition should be linked to component operations to control when the process is initiated.An enable flag is generated for each process state-machine. 
+
+TODO: TABLE TO GO HEREFor each transition in a process statemachine, the flags are used as follows:
+
+TODO: TABLE TO GO HERE\subsection{Timer}
+A special event is generated to advance time when the current time slice has completed.
+
+TODO: TABLE TO GO HERE		
+
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "component_diagrams-user_manual"
