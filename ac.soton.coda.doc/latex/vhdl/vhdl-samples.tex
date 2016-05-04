@@ -1,6 +1,19 @@
 \section{Samples}
 \label{sec:vhdl-samples}
 
+In order to generate code, port wake events have to be refined to use counters. Two counters \code{lockingCount} and \code{unlockingCount} are introduced. The statemachine WM are refined accordingly, by introducing the transitions that decreased the counter (see Figure~\ref{fig:m3-WM}). The guards of the old transition are refined accordingly using the counters.
+\begin{figure}[!htbp]
+  \centering
+  \ifplastex
+  \includegraphics[width=512]{figures/vhdl-WM-m3_WM}
+  \else
+  \includegraphics[width=0.5\textwidth]{figures/vhdl-WM-m3_WM}
+  \fi
+  \caption{Counters in the third refinement of WM}
+  \label{fig:m3-WM}
+\end{figure}
+
+
 The following VHDL code is generated for the \code{WM} component of the Washing Machine example.
 
 \begin{verbatim}
