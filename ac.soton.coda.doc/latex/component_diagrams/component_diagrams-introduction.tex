@@ -3,17 +3,32 @@
 
 The CODA tooling consists of a plug-in for the Rodin toolset. The plug-in provides a Component Diagram modelling tool, which enables component models to be added as an extension to an Event-B machine. A translator is provided to generate Event-B elements in the machine that implements the behaviour expressed in the Component Diagram. Hence the Component model contributes additional variables, invariants, guards and actions to the existing Event-B model and its events. The component model also generates a timer event and associated synchronisation infrastructure to the model. The component model makes use of and integrates with the existing Event-B State-machines  modelling tool, which is similarly designed to contribute behaviour to existing events.
 
-\subsection{Basis}As Rodin is an Eclipse based tool, so is CODA. The CODA tooling is based on the Event-B EMF framework, Event-B EMF Extensions and Generic Diagrams plug-ins .
+\subsection{Basis}
+As Rodin is an Eclipse based tool, so is CODA. The CODA tooling is based on the Event-B EMF framework, Event-B EMF Extensions and Generic Diagrams plug-ins .
 
 \subsection{The CODA Meta-model}
-Key:\begin{itemize}
-\item  RED - Concrete Meta-class,\item  YELLOW - Abstract Meta-class,\item  GREEN - Referenced meta-class from another domain meta-model
+Key:
+\begin{itemize}
+\item  RED - Concrete Meta-class,
+\item  YELLOW - Abstract Meta-class,
+\item  GREEN - Referenced meta-class from another domain meta-model
 \end{itemize}
 
 
-Figure 1 - The CODA Meta-model
+\begin{figure}[!htbp]
+  \centering
+  \ifplastex
+  \includegraphics[width=1024]{figures/image1.png}
+  \else
+  \includegraphics[width=1.0\textwidth]{figures/image1.png}
+  \fi
+  \caption{The CODA Meta-model}
+  \label{fig:TheCodaMetamodel}
+\end{figure}
 
-The CODA Meta-model (Figure 1) defines an abstract syntax for the modelling language.
+
+
+The CODA Meta-model (Figure \ref{fig:TheCodaMetamodel}) defines an abstract syntax for the modelling language.
 The boxes (called meta-classes) represent classes of elements that a particular CODA model might have.
 In the diagram, the meta-classes are colour coded as follows.
 Green indicates a referenced meta-class from another, more general, meta-model (i.e. not part of CODA), 
