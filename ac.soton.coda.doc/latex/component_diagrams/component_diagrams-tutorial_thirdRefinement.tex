@@ -1,25 +1,73 @@
 \subsection{The Third Refinement}
 \label{sec:component_diagrams-tutorial_thirdRefinement}
+
  
-Now we refine the notion of the Program. We associate with each PID a washTime, rinseTime and spinTime and also introduce a WashCount and SpinCount as shown in Figure 35. These properties constrain and make deterministic the operation of the washing machine sub-system for a given PID.
  
-Figure 35 - Adding Wash Program Details to the Model
+Now we refine the notion of the Program. We associate with each PID a washTime, rinseTime and spinTime and also introduce a WashCount and SpinCount as shown in Figure \ref{fig:AddingWashProgramDetailsToTheModel}. These properties constrain and make deterministic the operation of the washing machine sub-system for a given PID.
  
-The delay introduced for each wash mode is modelled using a SelfWake as shown for the rinse mode in Figure 36.
+ \begin{figure}[!htbp]
+  \centering
+  \ifplastex
+  \includegraphics[width=1024]{figures/image36.png}
+  \else
+  \includegraphics[width=1\textwidth]{figures/image36.png}
+  \fi
+  \caption{Adding Wash Program Details to the Model}
+  \label{fig:AddingWashProgramDetailsToTheModel}
+\end{figure} 
  
-Figure 36 - Introducing Wash Program Delays using Self Wakes
+The delay introduced for each wash mode is modelled using a SelfWake as shown for the rinse mode in Figure \ref{fig:IntroducingWashProgramDelaysUsingSelfWakes}.
  
-The number of washes or rinses associated with a program is modelled using a counter which is decremented and hence completes at rinseCounter = 0, as shown in Figure 37.
+ \begin{figure}[!htbp]
+  \centering
+  \ifplastex
+  \includegraphics[width=1024]{figures/image37.png}
+  \else
+  \includegraphics[width=1\textwidth]{figures/image37.png}
+  \fi
+  \caption{Introducing Wash Program Delays using Self Wakes}
+  \label{fig:IntroducingWashProgramDelaysUsingSelfWakes}
+\end{figure} 
+
  
-Figure 37 - Introducing Wash Program Cycles using Guards
+The number of washes or rinses associated with a program is modelled using a counter which is decremented and hence completes at rinseCounter = 0, as shown in Figure \ref{fig:IntroducingWashProgramCyclesUsingGuards}.
  
-Again, the model checker is run to verify that no deadlocks have been introduced into the system. Since this refinement is only to strengthen the guards, invariant preservation is not an issue in this refinement. Note that as shown in Figure 38, full operation coverage is achieved. The program constraints introduced in this refinement have reduced the model state space. 
+ \begin{figure}[!htbp]
+  \centering
+  \ifplastex
+  \includegraphics[width=1024]{figures/image38.png}
+  \else
+  \includegraphics[width=1\textwidth]{figures/image38.png}
+  \fi
+  \caption{Introducing Wash Program Cycles using Guards}
+  \label{fig:IntroducingWashProgramCyclesUsingGuards}
+\end{figure} 
  
-Figure 38 - ProB Model Checking Coverage for the Third Refinement
+Again, the model checker is run to verify that no deadlocks have been introduced into the system. Since this refinement is only to strengthen the guards, invariant preservation is not an issue in this refinement. Note that as shown in Figure \ref{fig:ProBModelCheckingCoverageForTheThirdRefinement}, full operation coverage is achieved. The program constraints introduced in this refinement have reduced the model state space. 
  
-The state machine is shown in Figure 39 below. Invariants concerning the counters have been added to the INPROGRESS and RINSING states. These invariants help ensure that no mistakes have been made in constructing the counters.
+ \begin{figure}[!htbp]
+  \centering
+  \ifplastex
+  \includegraphics[width=1024]{figures/image39.png}
+  \else
+  \includegraphics[width=1\textwidth]{figures/image39.png}
+  \fi
+  \caption{ProB Model Checking Coverage for the Third Refinement}
+  \label{fig:ProBModelCheckingCoverageForTheThirdRefinement}
+\end{figure} 
  
-Figure 39 - State-machine for the Third Refinement 
+The state machine is shown in Figure \ref{fig:StatemachineForTheThirdRefinement} below. Invariants concerning the counters have been added to the INPROGRESS and RINSING states. These invariants help ensure that no mistakes have been made in constructing the counters.
+ 
+ \begin{figure}[!htbp]
+  \centering
+  \ifplastex
+  \includegraphics[width=1024]{figures/image40.png}
+  \else
+  \includegraphics[width=1\textwidth]{figures/image40.png}
+  \fi
+  \caption{State-machine for the Third Refinement }
+  \label{fig:StatemachineForTheThirdRefinement}
+\end{figure} 
  
 
 %%% Local Variables:
