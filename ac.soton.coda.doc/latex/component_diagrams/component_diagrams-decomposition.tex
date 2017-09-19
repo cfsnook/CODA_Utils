@@ -1,0 +1,13 @@
+\section{Decomposition}
+\label{sec:component_diagrams-decomposition}
+
+This section describes decomposition and composition based on CODA diagram components and connectors. CODA includes support for decomposing a CODA component model located in a single Event-B machine into several different CODA component models located in separate Event-B machines. The decomposition is based on the ‘shared event’ decomposition method that is already available for decomposing ordinary Event-B models. The decomposition will be defined via  a nested component hierarchy. 
+
+iUML-B Regions
+Shared-event decomposition is supported in iUML-B using a technique called ‘Regions’. Regions can be added to a Machine for defining the resulting decomposition. Each region will define the model elements to be copied into the new machine that represents that region. When a decomposition is initiated by the user, the regions are used to define the results of the decomposition using the ‘shared-event’ approach. I.e. events are split and distributed over one or more region machines depending on the allocation of the other elements such as variables. 
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "component_diagrams-user_manual"
+%%% End:
